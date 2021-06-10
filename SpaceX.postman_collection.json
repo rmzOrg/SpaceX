@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "77349d68-7a22-4894-b66d-ff21a7aed4c8",
+		"name": "SpaceX",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code should not be 200,\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body is  value should be a Youtube link\", function () {\r",
+							"    pm.response.to.have.body(\"https://youtu.be/RfiQYRn7fBg\");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var capID = \"5e9e2c5bf35918ed873b2664\"\r",
+							"pm.environment.set(\"id\", capID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reuse_count\": 1,\r\n    \"water_landings\": 1,\r\n    \"land_landings\": 0,\r\n    \"last_update\": \"Reentered after three weeks in orbit\",\r\n    \"launches\": [\r\n        \"5eb87cdeffd86e000604b330\"\r\n    ],\r\n    \"serial\": \"C101\",\r\n    \"status\": \"retired\",\r\n    \"type\": \"Dragon 1.0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.spacexdata.com/v4/capsules/:id",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spacexdata",
+						"com"
+					],
+					"path": [
+						"v4",
+						"capsules",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Capsule",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code should not be 200,\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body is  value should be a Youtube link\", function () {\r",
+							"    pm.response.to.have.body(\"https://youtu.be/RfiQYRn7fBg\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Serial ID Validation\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.serial).to.eql(pm.environment.get(\"serial\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var serialID = \"5e9e2c5bf35918ed873b2664\"\r",
+							"pm.environment.set(\"serial\", serialID);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reuse_count\": 1,\r\n    \"water_landings\": 1,\r\n    \"land_landings\": 0,\r\n    \"last_update\": \"Reentered after three weeks in orbit\",\r\n    \"launches\": [\r\n        \"5eb87cdeffd86e000604b330\"\r\n    ],\r\n    \"serial\": \"{{serial}}\",\r\n    \"status\": \"retired\",\r\n    \"type\": \"Dragon 1.0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.spacexdata.com/v4/capsules",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spacexdata",
+						"com"
+					],
+					"path": [
+						"v4",
+						"capsules"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status of Capsule \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.eql(\"retired\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var capID = \"5e9e2c5bf35918ed873b2664\"\r",
+							"pm.environment.set(\"id\", capID);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spacexdata.com/v4/capsules/5e9e2c5bf35918ed873b2664",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spacexdata",
+						"com"
+					],
+					"path": [
+						"v4",
+						"capsules",
+						"5e9e2c5bf35918ed873b2664"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
